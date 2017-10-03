@@ -1,6 +1,3 @@
-#!env node
-// vim: set ft=javascript :
-
 const fs = require('fs');
 
 function readFile(fname) {
