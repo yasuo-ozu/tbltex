@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require('fs');
 
 function readFile(fname) {
@@ -68,8 +70,6 @@ for (let i = 2; i < process.argv.length; i++) {
 		let d = val.split(".");
 		inputResolution = d[0] ? parseInt(d[0], 10) : 0;
 		inputDotResolution = d[1] ? parseInt(d[1], 10) : 0;
-	} else if (val == "--expression" || val == "-e") {
-		// TODO:
 	} else if (val == "--document" || val == "-d") {
 		optDoc = true;
 	} else if (val == "--transverse" || val == "-t") {
@@ -77,9 +77,9 @@ for (let i = 2; i < process.argv.length; i++) {
 	} else if (!isNaN(parseInt(val, 10))) {
 		inputIndex = parseInt(val, 10);
 	} else {
-		let list = [];
+		let list = [], max = 0x7FFFFFFF;
 		if (!inputData) {
-			console.error("invalid input file");
+			console.error("invalid data source");
 			process.exit(1);
 		}
 		for (let j = 0; j < inputData.length; j++) {
@@ -87,7 +87,8 @@ for (let i = 2; i < process.argv.length; i++) {
 				console.error("index error");
 				process.exit(1);
 			}
-			list.push(parseValue(inputData[j][inputIndex], inputResolution, inputDotResolution));
+			let dat = inputData[j][inputIndex];
+			list.push(parseValue(dat, inputResolution, inputDotResolution));
 		}
 		heads.push(val);
 		cols.push(list);
