@@ -175,7 +175,7 @@ for (let i = 0; i < sortOrder.length; i++) {
 		let ind = sortOrder[i];
 		let A = parseInt(a[ind], 10), B = parseInt(b[ind], 10), ret;
 		if (isNaN(A) || isNaN(B)) {
-			A = a[ind].toString(); B = b[ind].toStrin();
+			A = a[ind].toString(); B = b[ind].toString();
 		}
 		if (A > B) ret = 1;
 		else if (A < B) ret = -1;
