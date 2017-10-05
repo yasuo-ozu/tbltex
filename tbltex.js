@@ -94,6 +94,7 @@ for (let i = 2; i < process.argv.length; i++) {
 		sorts.push(inputSort);
 		inputSort = 0;
 		inputIndex++;
+		if (inputData[0] && inputIndex >= inputData[0].length) inputIndex = 0;
 	}
 }
 
