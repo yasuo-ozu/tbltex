@@ -40,7 +40,7 @@ function parseValue(value, resolution, dotResolution) {
 		if (digits.length == 0 && sign == 1 && c == "-") sign = -1;
 		else if ("0123456789".indexOf(c) > -1) {
 			if (c == 0 && digits.length == 0) return value;
-			else digits.push(c);
+			else digits.push(Number(c));
 		} else if (c == ".") {
 			if (point > -1) return value;
 			else point = digits.length;
@@ -60,9 +60,25 @@ function parseValue(value, resolution, dotResolution) {
 	}
 	let res = "";
 	end = digits.length;
-	if (dotResolution != 0) end = point + dotResolution;
-	else if (resolution != 0) end = resolution;
-	if (end < point) end = point;
+	for (;;) {
+		if (dotResolution != 0) end = point + dotResolution;
+		else if (resolution != 0) end = resolution;
+		if (end < point) end = point;
+		if (digits.length > end && digits[end] >= 5) {
+			let i;
+			digits[end] = 0;
+			for (i = end - 1; i > -1; i--) {
+				digits[i] = digits[i] + 1;
+				if (digits[i] < 10) break;
+				digits[i] = 0;
+			}
+			if (i == -1) {
+				digits.splice(0, 0, '1');
+				end++;
+				point++;
+			} else break;
+		} else break;
+	}
 	if (sign < 0) res += "-";
 	for (let i = 0; i < end; i++) {
 		if (i == point) res += ".";
