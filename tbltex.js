@@ -6,7 +6,7 @@ function readFile(fname) {
 	let data = [];
 	let buf;
 	try {
-		buf = fs.readFileSync(fname);
+		buf = fs.readFileSync(fname || process.stdin.fd);
 	} catch (e) {
 		return null;
 	}
@@ -79,8 +79,7 @@ for (let i = 2; i < process.argv.length; i++) {
 	} else {
 		let list = [], max = 0x7FFFFFFF;
 		if (!inputData) {
-			console.error("invalid data source");
-			process.exit(1);
+			inputData = readFile(null);
 		}
 		for (let j = 0; j < inputData.length; j++) {
 			if (!inputData[j][inputIndex]) {
