@@ -112,10 +112,10 @@ for (let i = 0; ; i++) {
 
 let sortOrder = [];
 for (let i = 0; i < sorts.length; i++) {
-	if (sorts[i] == 2 || sorts[i] == -2) sortOrder.push(i);
+	if (sorts[i] == 1 || sorts[i] == -1) sortOrder.push(i);
 }
 for (let i = 0; i < sorts.length; i++) {
-	if (sorts[i] == 1 || sorts[i] == -1) sortOrder.push(i);
+	if (sorts[i] == 2 || sorts[i] == -2) sortOrder.push(i);
 }
 for (let i = 0; i < sortOrder.length; i++) {
 	rows.sort((a, b) => {
