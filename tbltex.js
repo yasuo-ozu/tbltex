@@ -110,7 +110,28 @@ for (let i = 0; ; i++) {
 	rows.push(row);
 }
 
-// TODO: sorting
+let sortOrder = [];
+for (let i = 0; i < sorts.length; i++) {
+	if (sorts[i] == 2 || sorts[i] == -2) sortOrder.push(i);
+}
+for (let i = 0; i < sorts.length; i++) {
+	if (sorts[i] == 1 || sorts[i] == -1) sortOrder.push(i);
+}
+for (let i = 0; i < sortOrder.length; i++) {
+	rows.sort((a, b) => {
+		let ind = sortOrder[i];
+		let A = parseInt(a[ind], 10), B = parseInt(b[ind], 10), ret;
+		if (isNaN(A) || isNaN(B)) {
+			A = a[ind].toString(); B = b[ind].toStrin();
+		}
+		if (A > B) ret = 1;
+		else if (A < B) ret = -1;
+		else ret = 0;
+		if (sorts[ind] < 0) ret = -ret;
+		return ret;
+	});
+}
+
 // TODO: transverse
 
 if (optDoc) process.stdout.write("\\documentclass{jsarticle}\n\\begin{document}\n");
