@@ -32,8 +32,44 @@ function readFile(fname) {
 }
 
 function parseValue(value, resolution, dotResolution) {
-	// TODO:
-	return value;
+	let digits = [], sign = 1, exponent = 0, point = -1, begin = 0, end;
+	if (resolution == 0 && dotResolution == 0) return value;
+	for (let i = 0; i < value.length; i++) {
+		let c = value[i];
+		if (c.match(/ \t/)) continue;
+		if (digits.length == 0 && sign == 1 && c == "-") sign = -1;
+		else if ("0123456789".indexOf(c) > -1) {
+			if (c == 0 && digits.length == 0) return value;
+			else digits.push(c);
+		} else if (c == ".") {
+			if (point > -1) return value;
+			else point = digits.length;
+		} else if (c == "e" || c == "E") {
+			exponent = Number(value.slice(i + 1));
+			if (isNaN(exponent)) return value;
+			break;
+		}
+	}
+	if (point == -1) point = digits.length;
+	if (exponent != 0) {
+		point += exponent;
+		while (point > 0) {
+			digits.splice(0, 0, '0');
+			point++;
+		}
+	}
+	let res = "";
+	if (resolution > 0) begin = point + dotResolution - resolution;
+	if (begin < 0) begin = 0;
+	end = digits.length;
+	if (dotResolution != 0) end = point + dotResolution;
+	else if (resolution != 0) end = resolution;
+	for (let i = begin; i < end; i++) {
+		if (i == point) res += ".";
+		if (i >= digits.length) res += "0";
+		else res += digits[i];
+	}
+	return res;
 }
 
 let inputData = null;
