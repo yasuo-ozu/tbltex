@@ -15,9 +15,12 @@ sudo npm install -g tbltex
 
 repeat the following options to create multiple columns.
 
-- `--file` or `-f` ... input file (tsv) (needed)
+- `--file` or `-f` ... input file (tsv)
+- `--sort` .. specify one of uUdD to do sorting (uppercase is stronger)
 -  N(number) ... use the Nth column of the input file (default: 0, 1, 2, ...)
-- other string ... create new colum titled with the string
+- other string (required) ... create new colum titled with the string
+
+if no files are specified with the column, stdin will be used.
 
 ## license
 MIT
