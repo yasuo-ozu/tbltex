@@ -32,7 +32,7 @@ function readFile(fname) {
 }
 
 function parseValue(value, resolution, dotResolution) {
-	let digits = [], sign = 1, exponent = 0, point = -1, begin = 0, end;
+	let digits = [], sign = 1, exponent = 0, point = -1, end;
 	if (resolution == 0 && dotResolution == 0) return value;
 	for (let i = 0; i < value.length; i++) {
 		let c = value[i];
@@ -59,13 +59,12 @@ function parseValue(value, resolution, dotResolution) {
 		}
 	}
 	let res = "";
-	if (resolution > 0) begin = point + dotResolution - resolution;
-	if (begin < 0) begin = 0;
 	end = digits.length;
 	if (dotResolution != 0) end = point + dotResolution;
 	else if (resolution != 0) end = resolution;
+	if (end < point) end = point;
 	if (sign < 0) res += "-";
-	for (let i = begin; i < end; i++) {
+	for (let i = 0; i < end; i++) {
 		if (i == point) res += ".";
 		if (i >= digits.length) res += "0";
 		else res += digits[i];
@@ -130,6 +129,7 @@ for (let i = 2; i < process.argv.length; i++) {
 		cols.push(list);
 		sorts.push(inputSort);
 		inputSort = 0;
+		inputResolution = inputDotResolution = 0;
 		inputIndex++;
 		if (inputData[0] && inputIndex >= inputData[0].length) inputIndex = 0;
 	}
