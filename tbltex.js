@@ -64,6 +64,7 @@ function parseValue(value, resolution, dotResolution) {
 	end = digits.length;
 	if (dotResolution != 0) end = point + dotResolution;
 	else if (resolution != 0) end = resolution;
+	if (sign < 0) res += "-";
 	for (let i = begin; i < end; i++) {
 		if (i == point) res += ".";
 		if (i >= digits.length) res += "0";
