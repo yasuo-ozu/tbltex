@@ -48,7 +48,7 @@ function parseValue(value, resolution, dotResolution) {
 			exponent = Number(value.slice(i + 1));
 			if (isNaN(exponent)) return value;
 			break;
-		}
+		} else return value;
 	}
 	if (point == -1) point = digits.length;
 	if (exponent != 0) {
