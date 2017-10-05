@@ -33,7 +33,7 @@ function readFile(fname) {
 
 function parseValue(value, resolution, dotResolution) {
 	let digits = [], sign = 1, exponent = 0, point = -1, end;
-	if (resolution == 0 && dotResolution == 0) return value;
+	if (resolution == -1 && dotResolution == -1) return value;
 	for (let i = 0; i < value.length; i++) {
 		let c = value[i];
 		if (c.match(/ \t/)) continue;
@@ -54,15 +54,15 @@ function parseValue(value, resolution, dotResolution) {
 	if (exponent != 0) {
 		point += exponent;
 		while (point > 0) {
-			digits.splice(0, 0, '0');
+			digits.splice(0, 0, 0);
 			point++;
 		}
 	}
 	let res = "";
 	end = digits.length;
 	for (;;) {
-		if (dotResolution != 0) end = point + dotResolution;
-		else if (resolution != 0) end = resolution;
+		if (dotResolution != -1) end = point + dotResolution;
+		else if (resolution != -1) end = resolution;
 		if (end < point) end = point;
 		if (digits.length > end && digits[end] >= 5) {
 			let i;
@@ -73,7 +73,7 @@ function parseValue(value, resolution, dotResolution) {
 				digits[i] = 0;
 			}
 			if (i == -1) {
-				digits.splice(0, 0, '1');
+				digits.splice(0, 0, 1);
 				end++;
 				point++;
 			} else break;
@@ -90,8 +90,8 @@ function parseValue(value, resolution, dotResolution) {
 
 let inputData = null;
 let inputSort = 0;
-let inputResolution = 0;
-let inputDotResolution = 0;
+let inputResolution = -1;
+let inputDotResolution = -1;
 let inputIndex = 0;
 
 let optTransverse = false;
@@ -120,8 +120,8 @@ for (let i = 2; i < process.argv.length; i++) {
 	} else if (val == "--resolution" || val == "-r") {
 		val = process.argv[++i];
 		let d = val.split(".");
-		inputResolution = d[0] ? parseInt(d[0], 10) : 0;
-		inputDotResolution = d[1] ? parseInt(d[1], 10) : 0;
+		inputResolution = d[0] ? parseInt(d[0], 10) : -1;
+		inputDotResolution = d[1] !== undefined ? parseInt(d[1], 10) : -1;
 	} else if (val == "--document" || val == "-d") {
 		optDoc = true;
 	} else if (val == "--transverse" || val == "-t") {
@@ -145,7 +145,7 @@ for (let i = 2; i < process.argv.length; i++) {
 		cols.push(list);
 		sorts.push(inputSort);
 		inputSort = 0;
-		inputResolution = inputDotResolution = 0;
+		inputResolution = inputDotResolution = -1;
 		inputIndex++;
 		if (inputData[0] && inputIndex >= inputData[0].length) inputIndex = 0;
 	}
