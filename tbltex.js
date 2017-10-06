@@ -132,6 +132,10 @@ for (let i = 2; i < process.argv.length; i++) {
 		let list = [], max = 0x7FFFFFFF;
 		if (!inputData) {
 			inputData = readFile(null);
+			if (!inputData) {
+				console.error("You have to specify data file or use stdin.");
+				process.exit(1);
+			}
 		}
 		for (let j = 0; j < inputData.length; j++) {
 			if (!inputData[j][inputIndex]) {
